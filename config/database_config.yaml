@@ -1,0 +1,41 @@
+
+# Database Configuration
+
+type: postgres
+host: !ENV ${DB_HOST}
+port: !ENV ${DB_PORT}
+name: !ENV ${DB_NAME}
+user: !ENV ${DB_USER}
+password: !ENV ${ENCRYPTED_DB_PASSWORD}
+pool_size: 20
+timeout: 30
+ssl: true
+backup:
+  enabled: true
+  backup_dir: /mnt/backups/database
+  frequency: daily
+  retention: 7  # days
+  compression: gzip
+  encryption: true
+replication:
+  enabled: true
+  replica_count: 2
+  replication_factor: 3
+  sync_mode: async
+monitoring:
+  enabled: true
+  metrics_exporter: prometheus
+  alert_thresholds:
+    cpu_usage: 80
+    memory_usage: 80
+    disk_space: 90
+maintenance:
+  vacuum:
+    enabled: true
+    frequency: weekly
+  reindex:
+    enabled: true
+    frequency: monthly
+  analyze:
+    enabled: true
+    frequency: weekly

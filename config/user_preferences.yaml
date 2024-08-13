@@ -1,0 +1,49 @@
+
+# User Preferences Configuration
+
+default_language: en
+supported_languages:
+  - en
+  - es
+  - fr
+  - de
+  - zh
+
+theme:
+  default: dark
+  available_themes:
+    - dark
+    - light
+    - blue
+    - high_contrast
+
+notifications:
+  email:
+    enabled: true
+    daily_summary: true
+    new_features: true
+    security_alerts: true
+  sms:
+    enabled: false
+    number: ""
+    frequency: weekly
+
+privacy_settings:
+  data_sharing:
+    analytics: true
+    third_party: false
+  data_retention:
+    user_data: 365  # days
+    logs: 30  # days
+  cookies:
+    essential_only: true
+
+accessibility:
+  text_size: medium
+  high_contrast_mode: false
+  screen_reader: false
+
+content_filtering:
+  adult_content: blocked
+  violence: blocked
+  custom_keywords: []

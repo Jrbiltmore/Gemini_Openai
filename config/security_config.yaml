@@ -1,0 +1,78 @@
+
+# Security Configuration
+
+authentication:
+  enable_2fa: true
+  session_timeout: 1800  # 30 minutes
+  password_policy:
+    min_length: 12
+    require_uppercase: true
+    require_numbers: true
+    require_special_characters: true
+    max_attempts: 5
+    lockout_duration: 300  # 5 minutes
+  oauth_providers:
+    google:
+      client_id: !ENV ${GOOGLE_CLIENT_ID}
+      client_secret: !ENV ${GOOGLE_CLIENT_SECRET}
+    github:
+      client_id: !ENV ${GITHUB_CLIENT_ID}
+      client_secret: !ENV ${GITHUB_CLIENT_SECRET}
+
+encryption:
+  algorithm: AES-256
+  key_storage: HSM  # Hardware Security Module
+  data_encryption:
+    at_rest: true
+    in_transit: true
+  key_rotation_interval: 90  # days
+  secure_hashing_algorithm: SHA-256
+
+firewall:
+  enabled: true
+  rules:
+    - name: Allow SSH
+      protocol: TCP
+      port: 22
+      action: allow
+    - name: Allow HTTPS
+      protocol: TCP
+      port: 443
+      action: allow
+    - name: Block All Others
+      protocol: ALL
+      action: deny
+
+monitoring:
+  intrusion_detection:
+    enabled: true
+    threshold: high
+    log_retention_period: 30  # days
+  anomaly_detection:
+    enabled: true
+    sensitivity: high
+
+compliance:
+  pci_dss:
+    enabled: true
+    scope: full
+  gdpr:
+    enabled: true
+    data_access_requests: true
+    data_deletion_requests: true
+  hipaa:
+    enabled: true
+    logging: true
+    audit_trail_retention: 6  # years
+
+incident_response:
+  plan_document: /mnt/data/security/incident_response_plan.pdf
+  team_contact:
+    primary: security_team@example.com
+    secondary: it_support@example.com
+  breach_notification:
+    max_response_time: 72  # hours
+  mitigation_steps:
+    - name: Quarantine Affected Systems
+    - name: Rotate Encryption Keys
+    - name: Perform Full Security Audit
